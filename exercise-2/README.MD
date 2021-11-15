@@ -2,7 +2,7 @@
 
 ### Ejecucion del programa
 
--Hubicarse en la carpeta exercise-2 y ejecutar el comando en consola:
+-Ubicarse en la carpeta exercise-2 y ejecutar el comando en consola:
 
 ```
  node index.js
