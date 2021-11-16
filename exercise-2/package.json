@@ -1,0 +1,12 @@
+{
+  "name": "exercise-2",
+  "version": "1.0.0",
+  "description": "-Ubicarse en la carpeta exercise-2 y ejecutar el comando en consola:",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

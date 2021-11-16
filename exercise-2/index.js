@@ -1,64 +1,42 @@
-//Variables
-const autosDisponibles = [
-  { marca: "Chevrolet", modelo: "Camaro", puertas: 2 },
-  { marca: "Chevrolet", modelo: "Cruze", puertas: 4 },
-  { marca: "Ford", modelo: "Fiesta", puertas: 4 },
-  { marca: "Ford", modelo: "Focus", puertas: 4 },
-  { marca: "Ford", modelo: "Mustang", puertas: 4 },
-  { marca: "Ford", modelo: "Fusion", puertas: 4 },
-  { marca: "Ford", modelo: "Ka", puertas: 2 },
-  { marca: "Audi", modelo: "A4", puertas: 5 },
-  { marca: "Audi", modelo: "A5", puertas: 5 },
-  { marca: "Audi", modelo: "A6", puertas: 5 },
-  { marca: "Audi", modelo: "A7", puertas: 5 },
-  { marca: "Audi", modelo: "A8", puertas: 5 },
-  { marca: "Audi", modelo: "Q5", puertas: 5 },
-  { marca: "BMW", modelo: "Serie 3", puertas: 5 },
-  { marca: "BMW", modelo: "Serie 5", puertas: 5 },
-  { marca: "BMW", modelo: "Serie 7", puertas: 5 },
-  { marca: "Mercedes Benz", modelo: "Clase A", puertas: 5 },
-  { marca: "Mercedes Benz", modelo: "Clase C", puertas: 5 },
-  { marca: "Mercedes Benz", modelo: "Clase E", puertas: 5 },
-];
+import autosDisponibles from "./autosDisponibles.js";
 
-let autosPuertaGenaro = [];
-
-//----------------
 // Ejercicio 1: Funcion para listar autos
-//----------------
 const listarAutos = (autos) => {
   //Validos si el array viene vacio
   if (autos.length < 1) return console.log("No se encontraron resultados");
-
   autos.forEach((auto) =>
-    console.log(`Marca: ${auto.marca} - Tenemos disponible un ${auto.modelo}`)
+    console.log(
+      `Marca: ${auto.marca} - Modelo: ${auto.modelo} - Puertas: ${auto.puertas}`
+    )
   );
 };
-//listarAutos(autosDisponibles);
+/* console.log("******************************************");
+console.log("            Autos disponibles             ");
+console.log("******************************************");
+listarAutos(autosDisponibles); */
 
-//----------------
 // Ejercicio 2: Cantidad de puertas disponibles
-//----------------
-const cantidadPuertas = (autos, puerta) => {
-  const autosPuertaGenaro = autos.filter((auto) => auto.puertas === puerta);
+const cantidadPuertas = (autos, puertas) => {
+  const autosPuertaGenaro = autos.filter((auto) => auto.puertas <= puertas);
   return autosPuertaGenaro;
 };
+/* console.log("******************************************");
+console.log(" Autos disponibles con 4 o menos puertas  ");
+console.log("******************************************");
+listarAutos(cantidadPuertas(autosDisponibles, 4));  */
 
-autosPuertaGenaro = cantidadPuertas(autosDisponibles, 4);
-//listarAutos(autosPuertaGenaro);
-
-//----------------
 //Ejercicio 3: Funcion para comparar valores recibiendo parametros
-//----------------
 const autosCondicional = (autos, propiedad, condicion) => {
   //Valido propiedad
   const propTrue = autos.every((auto) => Object.keys(auto).includes(propiedad));
   if (!propTrue) return console.log("Propiedad incorrecta");
 
-  const autosMarcaPuertaGenaro = autos.filter((auto) => {
-    if (propiedad == "marca") {
+  const autosPuertaGenaro = cantidadPuertas(autosDisponibles, 4);
+
+  const autosMarcaPuertaGenaro = autosPuertaGenaro.filter((auto) => {
+    if (propiedad === "marca") {
       return auto.marca == condicion;
-    } else if (propiedad == "modelo") {
+    } else if (propiedad === "modelo") {
       return auto.modelo == condicion;
     } else {
       return auto.puertas == condicion;
@@ -67,42 +45,35 @@ const autosCondicional = (autos, propiedad, condicion) => {
 
   autosMarcaPuertaGenaro.forEach((auto) =>
     console.log(
-      `Tenemos disponibles los autos ${auto.marca} ${auto.modelo} que tienen ${auto.puertas} puertas`
+      `* Marca: ${auto.marca} - Modelo: ${auto.modelo} - Puertas: ${auto.puertas}`
     )
   );
 
   return autosMarcaPuertaGenaro;
 };
-//autosCondicional(autosPuertaGenaro, "puertas", 4);
+/* console.log("**********************************************");
+console.log("Autos disponibles para el modelo seleccionado ");
+console.log("********************************************* ");
+autosCondicional(autosDisponibles, "marca", "Ford"); */
 
-//----------------
 //Ejercicio 4: Auto comprado
-//----------------
-const comprarAuto = () => {
-  const filterAuto = autosCondicional(
-    cantidadPuertas(autosDisponibles, 4),
-    "puertas",
-    4
-  );
-  const autoComprado = filterAuto.filter((auto) => auto.modelo === "Mustang");
-  const { marca, modelo, puertas } = autoComprado[0];
-
+const comprarAuto = (autos, modelo) => {
+  const autoComprado = autos.filter((auto) => auto.modelo === modelo);
   return autoComprado[0];
 };
-//const { marca, modelo, puertas } = comprarAuto();
-/* console.log(
-  `Felicitaciones Genaro por haber adquirido tu nuevo y flamante ${marca} ${modelo} que disfrutes tus ${puertas} puertas`
-); */
+/* console.log("***************************************************");
+console.log("Felicidades! Acaba de comprar el siguiente auto:   ");
+console.log("                                                   ");
+comprarAuto(autosDisponibles, 'Mustang'); */
 
-//----------------
 //Ejercicio 5: Listado actualizado
-//----------------
-const listadoActualizado = (autosDisponibles) => {
-  const { modelo } = comprarAuto();
-  const listaActualizada = autosDisponibles.filter(
-    (auto) => auto.modelo !== modelo
-  );
-
+const listadoActualizado = (autos, condicion) => {
+  const { modelo } = comprarAuto(autos, condicion);
+  const listaActualizada = autos.filter((auto) => auto.modelo !== modelo);
   listarAutos(listaActualizada);
 };
-listadoActualizado(autosDisponibles);
+console.log("                                          ");
+console.log("******************************************");
+console.log(" Autos actualizados  ");
+console.log("******************************************");
+listadoActualizado(autosDisponibles, "Mustang");
